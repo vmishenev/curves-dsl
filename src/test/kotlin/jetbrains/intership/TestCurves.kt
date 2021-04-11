@@ -13,7 +13,7 @@ class TestNegative {
             """
             import jetbrains.intership.*
             
-           curves {
+             curves {
                 curve {
                     curve {  }
                     range = 1..7
@@ -26,6 +26,23 @@ class TestNegative {
     }
 
 
+    @Test
+    fun testContex2() {
+        assertCompilationFails(
+                """
+            import jetbrains.intership.*
+            
+             curves {
+                curves {  }
+                curve {
+                    range = 1..7
+                    x = t * 0
+                    y = t
+                }
+            }
+        """
+        )
+    }
     private fun assertCompilationFails(source: String) {
         val result = KotlinCompilation().apply {
             sources = listOf(SourceFile.kotlin("test.kt", source))
